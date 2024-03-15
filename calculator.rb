@@ -11,7 +11,16 @@ class Calculator
     def evaluate_string(string_number)
       return 0 if string_number.empty?
 
-      string_number.split(/#{delimiter}|\n/).map(&:to_i).sum
+      @string_number = string_number
+      validate_numbers
+    end
+
+    def validate_numbers
+      numbers = @string_number.split(/#{delimiter}|\n/).map(&:to_i)
+      negatives = numbers.select(&:negative?)
+      raise "negative numbers not allowed #{negatives.join(', ')}" if negatives.any?
+
+      numbers.sum
     end
 
     def delimiter
