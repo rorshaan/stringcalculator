@@ -16,11 +16,18 @@ class Calculator
     end
 
     def validate_numbers
+      return 'Invalid Input' unless valid_input?
+
       numbers = @string_number.split(/#{delimiter}|\n/).map(&:to_i)
       negatives = numbers.select(&:negative?)
       raise "negative numbers not allowed #{negatives.join(', ')}" if negatives.any?
 
       numbers.sum
+    end
+
+    def valid_input?
+      numbers = @string_number.split(delimiter)
+      numbers.select { |num| num.eql?("\n") }.empty?
     end
 
     def delimiter
