@@ -11,7 +11,16 @@ class Calculator
     def evaluate_string(string_number)
       return 0 if string_number.empty?
 
-      string_number.split(/,|\n/).map(&:to_i).sum
+      string_number.split(/#{delimiter}|\n/).map(&:to_i).sum
+    end
+
+    def delimiter
+      str = ','
+      if @string_number.start_with?('//')
+        str, _numbers = @string_number.split("\n", 2)
+        str = str[2..]
+      end
+      str
     end
   end
 end
